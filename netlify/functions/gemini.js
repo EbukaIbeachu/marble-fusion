@@ -3,6 +3,13 @@ const { GoogleGenAI, Type } = require("@google/genai");
 exports.handler = async function(event, context) {
   const { prompt } = JSON.parse(event.body || '{}');
   const apiKey = process.env.VITE_GEMINI_API_KEY;
+  // Debug: Return the API key value for troubleshooting (remove after testing)
+  if (event.queryStringParameters && event.queryStringParameters.debug === '1') {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ debugApiKey: apiKey })
+    };
+  }
 
   if (!apiKey) {
     return {
