@@ -34,9 +34,15 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({ result: response })
     };
   } catch (error) {
+    // Detailed error logging
+    console.error("Gemini API error:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      body: JSON.stringify({
+        error: error.message,
+        stack: error.stack,
+        full: error
+      })
     };
   }
 };
